@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sameerkhan86926-a11y.github.io/resumecraft/sitemap.xml
