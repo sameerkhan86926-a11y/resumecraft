@@ -37,7 +37,7 @@ h1{font-size:clamp(36px,6vw,68px);line-height:1.05;letter-spacing:-2.5px;margin:
 .small-btn{padding:8px 11px;background:#252238;color:#ddd0ff;border:1px solid #4b3c6b;font-size:12px;border-radius:6px;transition:0.2s}
 .small-btn:hover{background:#383254;color:#fff}
 .stats{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-top:24px;color:var(--muted);font-size:12px}
-.app{display:grid;grid-template-columns:minmax(310px,440px) minmax(0,1fr);gap:22px;padding:20px 4% 60px;max-width:1600px;margin:auto;align-items:start}
+.app{display:grid;grid-template-columns:minmax(320px,460px) minmax(0,1fr);gap:22px;padding:20px 4% 60px;max-width:1600px;margin:auto;align-items:start}
 .panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden}
 .panel-head{padding:19px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .panel-head h2{font-size:16px;margin:0}
@@ -53,7 +53,7 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
 .actions button{flex:1;min-width:130px}
-.template-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.template-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .template{border:1px solid #393547;border-radius:9px;padding:12px 4px;text-align:center;background:#101019;color:#ccc;font-size:11px;transition:0.2s}
 .template.active{border-color:var(--purple);background:#2a2042;color:#fff}
 .preview-panel{position:sticky;top:86px}
@@ -61,6 +61,9 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
 .preview-toolbar span{font-size:12px;color:var(--muted)}
 .paper-wrap{padding:24px;background:#252531;overflow:auto;max-height:83vh}
 .paper{position:relative;width:100%;max-width:794px;min-height:1050px;background:white;color:#252333;margin:auto;padding:48px 48px 40px;box-shadow:0 10px 40px #0004;font-family:Arial,sans-serif;overflow-wrap:anywhere}
+.resume-header{display:flex;gap:20px;align-items:center}
+.resume-header-text{flex:1}
+.resume-photo{width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid var(--resume-accent);display:none}
 .resume-name{font-size:30px;font-weight:800;margin:0 0 7px;color:#24203a;letter-spacing:-.6px}
 .resume-role{font-size:14px;color:var(--resume-accent);font-weight:700;margin-bottom:12px}
 .contact{font-size:10px;color:#656170;line-height:1.9;border-bottom:2px solid var(--resume-accent);padding-bottom:15px}
@@ -74,10 +77,14 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
 .skills{display:flex;flex-wrap:wrap;gap:6px}
 .skill{font-size:10px;padding:5px 8px;background:#f1ecfa;color:var(--resume-accent);border-radius:4px}
 .footer{text-align:center;padding:24px;color:#77738a;font-size:11px;border-top:1px solid var(--border)}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#29213b;border:1px solid #7054a5;color:white;padding:12px 18px;border-radius:10px;display:none;z-index:10;font-size:13px;box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#29213b;border:1px solid #7054a5;color:white;padding:12px 18px;border-radius:10px;display:none;z-index:100;font-size:13px;box-shadow:0 8px 30px rgba(0,0,0,0.5)}
 .empty-note{font-size:11px;color:#a5a1b8;line-height:1.6}
 
-/* Advanced Features Styles */
+/* Two Column Layout Styles */
+.two-col-container{display:grid;grid-template-columns:220px 1fr;gap:24px;margin-top:16px}
+.two-col-left{border-right:1px solid #ece8f5;padding-right:18px}
+.two-col-right{padding-left:4px}
+
 .color-swatches{display:flex;gap:8px;align-items:center;margin-top:6px}
 .color-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .2s}
 .color-dot:hover{transform:scale(1.1)}
@@ -88,6 +95,10 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
 .page-break-label{position:absolute;right:10px;top:-18px;font-size:10px;background:#ffe3e3;color:#c53030;padding:2px 6px;border-radius:4px;font-weight:bold}
 .page-alert{display:none;background:#351a24;border:1px solid #78263e;color:#ffb3c1;padding:8px 12px;border-radius:8px;font-size:11px;margin-bottom:12px}
 
+/* Modal for Cover Letter */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal-box{background:var(--panel);border:1px solid var(--border);border-radius:14px;max-width:700px;width:100%;padding:22px;max-height:90vh;overflow:auto}
+
 @media(max-width:850px){
  .app{grid-template-columns:1fr;padding:12px}
  .form-body{max-height:none}
@@ -97,6 +108,8 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
  .nav{padding:0 18px}
  .hero{padding:45px 20px 25px}
  .resume-name{font-size:25px}
+ .two-col-container{grid-template-columns:1fr;gap:15px}
+ .two-col-left{border-right:none;border-bottom:1px solid #ece8f5;padding-bottom:15px}
 }
 @media print{
  @page{size:A4;margin:0}
@@ -114,15 +127,15 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
 <body>
 <header class="nav">
   <div class="logo">Resume<span>Craft</span></div>
-  <div class="badge">FREE RESUME STUDIO</div>
+  <div class="badge">PRO RESUME STUDIO</div>
 </header>
 
 <section class="hero">
   <div class="eyebrow">Your next chapter starts here</div>
   <h1>Build a resume that<br><span class="gradient">opens new doors.</span></h1>
-  <p>Create a professional resume with live preview, elegant templates and a printable PDF. No account required. Your draft stays in your browser.</p>
+  <p>Create a professional resume with live preview, ATS analysis, cover letter generator and export options. No account required. Your draft stays in your browser.</p>
   <button class="primary" onclick="document.getElementById('editor').scrollIntoView({behavior:'smooth'})">Create My Resume →</button>
-  <div class="stats"><span>✓ Free to use</span><span>✓ Live preview</span><span>✓ No watermark</span><span>✓ Browser auto-save</span></div>
+  <div class="stats"><span>✓ ATS Analyzer</span><span>✓ 2-Column Mode</span><span>✓ Cover Letter Generator</span><span>✓ Instant TXT/MD Export</span></div>
 </section>
 
 <main class="app" id="editor">
@@ -145,11 +158,18 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
     </div>
 
     <!-- Quick Tools -->
-    <div style="display:flex;gap:8px;margin-bottom:15px;flex-wrap:wrap">
-      <button class="small-btn" onclick="fillSampleData()" style="flex:1">Load Sample</button>
+    <div style="display:flex;gap:6px;margin-bottom:15px;flex-wrap:wrap">
+      <button class="small-btn" onclick="fillSampleData()" style="flex:1">Sample Data</button>
       <button class="small-btn" onclick="exportData()" style="flex:1">Export JSON</button>
       <button class="small-btn" onclick="document.getElementById('importFile').click()" style="flex:1">Import JSON</button>
+      <button class="small-btn" onclick="exportPlainText()" style="flex:1">Export TXT</button>
+      <button class="small-btn" onclick="exportMarkdown()" style="flex:1">Export MD</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    </div>
+
+    <!-- Cover Letter Trigger -->
+    <div style="margin-bottom:15px">
+      <button class="secondary" onclick="openCoverLetterModal()" style="width:100%;font-size:12px;padding:10px">✉️ Open Cover Letter Builder</button>
     </div>
 
     <!-- ATS Matcher -->
@@ -199,12 +219,28 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
       <button class="template active" data-template="classic" onclick="setTemplate('classic',this)">Classic</button>
       <button class="template" data-template="modern" onclick="setTemplate('modern',this)">Modern</button>
       <button class="template" data-template="minimal" onclick="setTemplate('minimal',this)">Minimal</button>
+      <button class="template" data-template="twocol" onclick="setTemplate('twocol',this)">2-Column</button>
+    </div>
+
+    <!-- Section Order Manager -->
+    <div class="field" style="background:#13131c;padding:10px;border-radius:10px;border:1px solid #343344;margin-top:14px">
+      <label style="font-weight:700;margin-bottom:6px">SECTION ORDERING (CLICK TO MOVE)</label>
+      <div id="sectionOrderContainer" style="display:flex;flex-wrap:wrap;gap:6px"></div>
     </div>
 
     <!-- Personal Details -->
     <div class="group-title">
       <span>01 — PERSONAL DETAILS</span>
       <button class="vis-btn" onclick="toggleVisibility('personal')" title="Toggle Visibility">👁</button>
+    </div>
+    <div class="two">
+      <div class="field">
+        <label>Profile Picture</label>
+        <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoUpload(event)" style="font-size:11px;padding:8px">
+      </div>
+      <div class="field" style="display:flex;align-items:flex-end">
+        <button class="small-btn" onclick="removePhoto()" style="width:100%;padding:10px;background:#381d28;border-color:#5a2336;color:#ffaec5">Remove Photo</button>
+      </div>
     </div>
     <div class="field"><label>Full name</label><input id="name" placeholder="e.g. Rahul Sharma" data-save></div>
     <div class="field"><label>Professional title</label><input id="role" placeholder="e.g. Full Stack Developer" data-save></div>
@@ -303,24 +339,47 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
     <article class="paper" id="paper">
       <div class="page-break-line"><span class="page-break-label">A4 Page 1 Boundary</span></div>
       
-      <div id="personalSection">
-        <h1 class="resume-name" id="outName">Your Name</h1>
-        <div class="resume-role" id="outRole">Your Professional Title</div>
-        <div class="contact" id="outContact">Email · Phone · Location</div>
+      <!-- Top Personal Header -->
+      <div id="personalSection" class="resume-header">
+        <img id="outPhoto" class="resume-photo" alt="Profile">
+        <div class="resume-header-text">
+          <h1 class="resume-name" id="outName">Your Name</h1>
+          <div class="resume-role" id="outRole">Your Professional Title</div>
+          <div class="contact" id="outContact">Email · Phone · Location</div>
+        </div>
       </div>
 
-      <section class="resume-section" id="summarySection"><h3>Professional Summary</h3><p id="outSummary"></p></section>
-      <section class="resume-section" id="experienceSection"><h3>Work Experience</h3><div id="outExperience"></div></section>
-      <section class="resume-section" id="educationSection"><h3>Education</h3><div id="outEducation"></div></section>
-      <section class="resume-section" id="skillsSection"><h3>Key Skills</h3><div class="skills" id="outSkills"></div></section>
-      <section class="resume-section" id="projectsSection"><h3>Projects</h3><div id="outProjects"></div></section>
-      <section class="resume-section" id="certificatesSection"><h3>Certificates</h3><div id="outCertificates"></div></section>
-      <section class="resume-section" id="languagesSection"><h3>Languages</h3><p id="outLanguages"></p></section>
-      <div id="outCustomSections"></div>
+      <!-- Single Column Container -->
+      <div id="singleColContainer"></div>
+
+      <!-- Two Column Container -->
+      <div id="twoColContainer" class="two-col-container" style="display:none">
+        <div id="twoColLeft" class="two-col-left"></div>
+        <div id="twoColRight" class="two-col-right"></div>
+      </div>
     </article>
   </div>
 </section>
 </main>
+
+<!-- Cover Letter Modal -->
+<div id="coverLetterModal" class="modal-overlay">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h3 style="margin:0;font-size:16px">Cover Letter Generator</h3>
+      <button class="small-btn" onclick="closeCoverLetterModal()">✕ Close</button>
+    </div>
+    <div class="two">
+      <div class="field"><label>Target Company</label><input id="clCompany" placeholder="e.g. Google India" oninput="generateCoverLetter()"></div>
+      <div class="field"><label>Hiring Manager / Team</label><input id="clManager" placeholder="e.g. Hiring Manager" oninput="generateCoverLetter()"></div>
+    </div>
+    <div class="field"><label>Generated Cover Letter</label><textarea id="clContent" style="min-height:220px;font-size:12px"></textarea></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="small-btn" onclick="copyCoverLetter()">Copy to Clipboard</button>
+      <button class="primary" onclick="printCoverLetter()" style="padding:8px 14px;font-size:12px">Print Cover Letter</button>
+    </div>
+  </div>
+</div>
 
 <footer class="footer">ResumeCraft · Build your future, one page at a time.</footer>
 <div class="toast" id="toast"></div>
@@ -334,15 +393,22 @@ const entryTypes={
  certificates:{title:'Certificate name',sub:'Issuing organization · Year',desc:'Details (optional)'}
 };
 
+const actionVerbs = [
+  "Architected", "Engineered", "Optimized", "Spearheaded", "Delivered", 
+  "Automated", "Streamlined", "Accelerated", "Implemented", "Orchestrated"
+];
+
 let currentProfileId = 'default';
 let profiles = {'default': 'Default Resume'};
 let entries = {experience:[], education:[], projects:[], certificates:[]};
 let customSections = [];
 let visibility = {personal:true, summary:true, experience:true, education:true, skills:true, projects:true, certificates:true, languages:true};
+let sectionOrder = ['summary', 'experience', 'education', 'skills', 'projects', 'certificates', 'languages', 'custom'];
 let template = 'classic';
 let accentColor = '#7650cf';
 let fontFamily = 'Arial, sans-serif';
 let spacingMode = 'normal';
+let profilePhoto = '';
 let timer;
 
 function safe(v){
@@ -356,6 +422,62 @@ function formatBullets(text){
   return '<ul>' + lines.map(line => `<li>${safe(line.replace(/^[-•*]\s*/, ''))}</li>`).join('') + '</ul>';
  }
  return `<p>${safe(text)}</p>`;
+}
+
+function handlePhotoUpload(e){
+ const file = e.target.files[0];
+ if(!file) return;
+ const reader = new FileReader();
+ reader.onload = evt => {
+   profilePhoto = evt.target.result;
+   renderResume();
+   saveData();
+   showToast('Photo uploaded');
+ };
+ reader.readAsDataURL(file);
+}
+
+function removePhoto(){
+ profilePhoto = '';
+ document.getElementById('photoInput').value = '';
+ renderResume();
+ saveData();
+ showToast('Photo removed');
+}
+
+function polishTextarea(textareaEl){
+ const randomVerb = actionVerbs[Math.floor(Math.random() * actionVerbs.length)];
+ const val = textareaEl.value.trim();
+ if(!val){
+   textareaEl.value = `- ${randomVerb} key initiative, improving efficiency by 25%`;
+ } else {
+   textareaEl.value = `- ${randomVerb} ${val.replace(/^[-•*]\s*/, '')}`;
+ }
+ textareaEl.dispatchEvent(new Event('input'));
+ showToast('Action verb inserted!');
+}
+
+function renderSectionOrderManager(){
+ const box = document.getElementById('sectionOrderContainer');
+ box.innerHTML = '';
+ sectionOrder.forEach((sec, idx) => {
+   const tag = document.createElement('span');
+   tag.className = 'small-btn';
+   tag.style.cssText = 'padding:4px 8px;font-size:11px;display:flex;align-items:center;gap:4px;cursor:pointer';
+   tag.innerHTML = `${sec.toUpperCase()} <span style="opacity:0.6;font-size:9px">▲</span>`;
+   tag.title = 'Click to move forward in order';
+   tag.onclick = () => {
+     if(idx > 0){
+       const temp = sectionOrder[idx];
+       sectionOrder[idx] = sectionOrder[idx-1];
+       sectionOrder[idx-1] = temp;
+       renderSectionOrderManager();
+       renderResume();
+       saveData();
+     }
+   };
+   box.appendChild(tag);
+ });
 }
 
 function toggleVisibility(secKey){
@@ -460,7 +582,13 @@ function renderEntryForms(){
     </div>
     <div class="field"><label>${entryTypes[type].title}</label><input data-key="title" placeholder="${entryTypes[type].title}" value="${safe(item.title)}"></div>
     <div class="field"><label>${entryTypes[type].sub}</label><input data-key="sub" placeholder="${entryTypes[type].sub}" value="${safe(item.sub)}"></div>
-    <div class="field"><label>${entryTypes[type].desc}</label><textarea data-key="desc" placeholder="${entryTypes[type].desc}">${safe(item.desc)}</textarea></div>`;
+    <div class="field">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <label style="margin:0">${entryTypes[type].desc}</label>
+        <button class="small-btn" type="button" style="padding:2px 6px;font-size:10px" onclick="polishTextarea(this.closest('.field').querySelector('textarea'))">✨ Action Verb</button>
+      </div>
+      <textarea data-key="desc" placeholder="${entryTypes[type].desc}">${safe(item.desc)}</textarea>
+    </div>`;
    
    wrap.querySelectorAll('[data-key]').forEach(input=>{
     input.addEventListener('input',()=>updateEntry(type,item.id,input.dataset.key,input.value));
@@ -470,59 +598,152 @@ function renderEntryForms(){
  });
 }
 
-function renderEntries(type,outId,sectionId){
- const box=document.getElementById(outId);
- box.innerHTML='';
- if(!visibility[type]){
-   document.getElementById(sectionId).style.display = 'none';
-   return;
+function buildSectionElement(secKey){
+ const v=id=>document.getElementById(id).value.trim();
+ const sec=document.createElement('section');
+ sec.className='resume-section';
+
+ if(secKey==='summary'){
+   if(!visibility.summary || !v('summary')) return null;
+   sec.innerHTML=`<h3>Professional Summary</h3><p>${safe(v('summary'))}</p>`;
+   return sec;
  }
- const valid=entries[type].filter(x=>x.title.trim()||x.sub.trim()||x.desc.trim());
- document.getElementById(sectionId).style.display=valid.length?'':'none';
- valid.forEach(item=>{
-  const div=document.createElement('div');
-  div.style.marginBottom=spacingMode==='compact'?'6px':'10px';
-  div.innerHTML=`<div class="entry-title">${safe(item.title)}</div>
-  ${item.sub.trim()?`<div class="entry-sub">${safe(item.sub)}</div>`:''}
-  ${item.desc.trim()? formatBullets(item.desc) :''}`;
-  box.appendChild(div);
- });
+ if(secKey==='experience'){
+   if(!visibility.experience) return null;
+   const valid=entries.experience.filter(x=>x.title.trim()||x.sub.trim()||x.desc.trim());
+   if(!valid.length) return null;
+   let html='<h3>Work Experience</h3>';
+   valid.forEach(item=>{
+     html+=`<div style="margin-bottom:${spacingMode==='compact'?'6px':'10px'}">
+       <div class="entry-title">${safe(item.title)}</div>
+       ${item.sub.trim()?`<div class="entry-sub">${safe(item.sub)}</div>`:''}
+       ${item.desc.trim()? formatBullets(item.desc) :''}
+     </div>`;
+   });
+   sec.innerHTML=html;
+   return sec;
+ }
+ if(secKey==='education'){
+   if(!visibility.education) return null;
+   const valid=entries.education.filter(x=>x.title.trim()||x.sub.trim()||x.desc.trim());
+   if(!valid.length) return null;
+   let html='<h3>Education</h3>';
+   valid.forEach(item=>{
+     html+=`<div style="margin-bottom:${spacingMode==='compact'?'6px':'10px'}">
+       <div class="entry-title">${safe(item.title)}</div>
+       ${item.sub.trim()?`<div class="entry-sub">${safe(item.sub)}</div>`:''}
+       ${item.desc.trim()? formatBullets(item.desc) :''}
+     </div>`;
+   });
+   sec.innerHTML=html;
+   return sec;
+ }
+ if(secKey==='skills'){
+   if(!visibility.skills) return null;
+   const skills=v('skills').split(',').map(s=>s.trim()).filter(Boolean);
+   if(!skills.length) return null;
+   sec.innerHTML=`<h3>Key Skills</h3><div class="skills">${skills.map(s=>`<span class="skill" style="color:${accentColor};background:${template==='minimal'?'#f3f4f6':'#f1ecfa'}">${safe(s)}</span>`).join('')}</div>`;
+   return sec;
+ }
+ if(secKey==='projects'){
+   if(!visibility.projects) return null;
+   const valid=entries.projects.filter(x=>x.title.trim()||x.sub.trim()||x.desc.trim());
+   if(!valid.length) return null;
+   let html='<h3>Projects</h3>';
+   valid.forEach(item=>{
+     html+=`<div style="margin-bottom:${spacingMode==='compact'?'6px':'10px'}">
+       <div class="entry-title">${safe(item.title)}</div>
+       ${item.sub.trim()?`<div class="entry-sub">${safe(item.sub)}</div>`:''}
+       ${item.desc.trim()? formatBullets(item.desc) :''}
+     </div>`;
+   });
+   sec.innerHTML=html;
+   return sec;
+ }
+ if(secKey==='certificates'){
+   if(!visibility.certificates) return null;
+   const valid=entries.certificates.filter(x=>x.title.trim()||x.sub.trim()||x.desc.trim());
+   if(!valid.length) return null;
+   let html='<h3>Certificates</h3>';
+   valid.forEach(item=>{
+     html+=`<div style="margin-bottom:${spacingMode==='compact'?'6px':'10px'}">
+       <div class="entry-title">${safe(item.title)}</div>
+       ${item.sub.trim()?`<div class="entry-sub">${safe(item.sub)}</div>`:''}
+       ${item.desc.trim()? formatBullets(item.desc) :''}
+     </div>`;
+   });
+   sec.innerHTML=html;
+   return sec;
+ }
+ if(secKey==='languages'){
+   if(!visibility.languages || !v('languages')) return null;
+   sec.innerHTML=`<h3>Languages</h3><p>${safe(v('languages'))}</p>`;
+   return sec;
+ }
+ if(secKey==='custom'){
+   const valid=customSections.filter(cs=>cs.visible && (cs.title.trim()||cs.content.trim()));
+   if(!valid.length) return null;
+   let html='';
+   valid.forEach(cs=>{
+     html+=`<h3>${safe(cs.title)}</h3>${formatBullets(cs.content)}`;
+   });
+   sec.innerHTML=html;
+   return sec;
+ }
+ return null;
 }
 
 function renderResume(){
  const v=id=>document.getElementById(id).value.trim();
- document.getElementById('personalSection').style.display = visibility.personal ? '' : 'none';
+ document.getElementById('personalSection').style.display = visibility.personal ? 'flex' : 'none';
  document.getElementById('outName').textContent=v('name')||'Your Name';
  document.getElementById('outRole').textContent=v('role')||'Your Professional Title';
  const contacts=[v('email'),v('phone'),v('location'),v('linkedin')].filter(Boolean);
  document.getElementById('outContact').textContent=contacts.join('  |  ')||'Email · Phone · Location';
  
- document.getElementById('outSummary').textContent=v('summary')||'Your professional summary will appear here.';
- document.getElementById('summarySection').style.display= (visibility.summary && v('summary')) ? '' : 'none';
- 
- renderEntries('experience','outExperience','experienceSection');
- renderEntries('education','outEducation','educationSection');
- renderEntries('projects','outProjects','projectsSection');
- renderEntries('certificates','outCertificates','certificatesSection');
- 
- const skills=v('skills').split(',').map(s=>s.trim()).filter(Boolean);
- document.getElementById('skillsSection').style.display=(visibility.skills && skills.length)?'':'none';
- document.getElementById('outSkills').innerHTML=skills.map(s=>`<span class="skill">${safe(s)}</span>`).join('');
- 
- document.getElementById('outLanguages').textContent=v('languages');
- document.getElementById('languagesSection').style.display=(visibility.languages && v('languages'))?'':'none';
- 
- // Custom Sections Render
- const custBox = document.getElementById('outCustomSections');
- custBox.innerHTML = '';
- customSections.filter(cs => cs.visible && (cs.title.trim() || cs.content.trim())).forEach(cs => {
-   const sec = document.createElement('section');
-   sec.className = 'resume-section';
-   sec.innerHTML = `<h3>${safe(cs.title)}</h3>${formatBullets(cs.content)}`;
-   custBox.appendChild(sec);
- });
+ const photoEl = document.getElementById('outPhoto');
+ if(profilePhoto){
+   photoEl.src = profilePhoto;
+   photoEl.style.display = 'block';
+ } else {
+   photoEl.style.display = 'none';
+ }
 
- // Styles & Spacing
+ const singleContainer = document.getElementById('singleColContainer');
+ const twoColContainer = document.getElementById('twoColContainer');
+ const twoColLeft = document.getElementById('twoColLeft');
+ const twoColRight = document.getElementById('twoColRight');
+
+ singleContainer.innerHTML = '';
+ twoColLeft.innerHTML = '';
+ twoColRight.innerHTML = '';
+
+ if(template === 'twocol'){
+   singleContainer.style.display = 'none';
+   twoColContainer.style.display = 'grid';
+
+   const leftKeys = ['skills', 'education', 'languages', 'certificates'];
+   const rightKeys = ['summary', 'experience', 'projects', 'custom'];
+
+   sectionOrder.forEach(secKey => {
+     const el = buildSectionElement(secKey);
+     if(!el) return;
+     if(leftKeys.includes(secKey)){
+       twoColLeft.appendChild(el);
+     } else {
+       twoColRight.appendChild(el);
+     }
+   });
+ } else {
+   singleContainer.style.display = 'block';
+   twoColContainer.style.display = 'none';
+
+   sectionOrder.forEach(secKey => {
+     const el = buildSectionElement(secKey);
+     if(el) singleContainer.appendChild(el);
+   });
+ }
+
  const paper=document.getElementById('paper');
  paper.style.setProperty('--resume-accent', accentColor);
  paper.style.borderTop=template==='modern'?`7px solid ${accentColor}`:'none';
@@ -532,12 +753,7 @@ function renderResume(){
  
  document.getElementById('outName').style.color=template==='modern'?accentColor:'#24203a';
  document.querySelectorAll('.resume-section h3').forEach(h=>h.style.color=template==='minimal'?'#333':accentColor);
- document.querySelectorAll('.skill').forEach(s=>{
-   s.style.color = accentColor;
-   s.style.background = template==='minimal'?'#f3f4f6':'#f1ecfa';
- });
 
- // Update Visibility Buttons UI
  document.querySelectorAll('.vis-btn').forEach(btn => {
    const match = btn.getAttribute('onclick')?.match(/'([^']+)'/);
    if(match && visibility[match[1]] !== undefined){
@@ -632,10 +848,12 @@ function saveData(){
    entries,
    customSections,
    visibility,
+   sectionOrder,
    template,
    accentColor,
    fontFamily,
-   spacingMode
+   spacingMode,
+   profilePhoto
  };
  fields.forEach(id => profileData.fields[id] = document.getElementById(id).value);
  try{
@@ -659,8 +877,10 @@ function loadProfile(pId){
   if(data.entries) entries = data.entries;
   if(data.customSections) customSections = data.customSections;
   if(data.visibility) visibility = {...visibility, ...data.visibility};
+  if(data.sectionOrder) sectionOrder = data.sectionOrder;
   if(data.template) template = data.template;
   if(data.accentColor) accentColor = data.accentColor;
+  if(data.profilePhoto) profilePhoto = data.profilePhoto;
   if(data.fontFamily) {
     fontFamily = data.fontFamily;
     document.getElementById('fontSelect').value = fontFamily;
@@ -700,6 +920,7 @@ function switchProfile(id){
  loadProfile(id);
  renderEntryForms();
  renderCustomSectionForms();
+ renderSectionOrderManager();
  renderResume();
  showToast(`Switched to: ${profiles[id]}`);
 }
@@ -715,6 +936,7 @@ function createNewProfile(){
  updateProfileDropdown();
  renderEntryForms();
  renderCustomSectionForms();
+ renderSectionOrderManager();
  renderResume();
  saveData();
  showToast(`Profile created: ${name}`);
@@ -734,6 +956,7 @@ function deleteCurrentProfile(){
  loadProfile(currentProfileId);
  renderEntryForms();
  renderCustomSectionForms();
+ renderSectionOrderManager();
  renderResume();
  saveData();
  showToast('Profile deleted');
@@ -743,6 +966,7 @@ function clearResumeFields(){
  fields.forEach(id => document.getElementById(id).value = '');
  Object.keys(entries).forEach(k => entries[k] = []);
  customSections = [];
+ profilePhoto = '';
 }
 
 function fillSampleData(){
@@ -780,6 +1004,7 @@ function fillSampleData(){
  customSections = sample.customSections;
  renderEntryForms();
  renderCustomSectionForms();
+ renderSectionOrderManager();
  renderResume();
  saveData();
  showToast('Sample data loaded');
@@ -798,6 +1023,89 @@ function exportData(){
  showToast('Backup exported!');
 }
 
+function exportPlainText(){
+ const v=id=>document.getElementById(id).value.trim();
+ let txt = `${v('name')}\n${v('role')}\n${[v('email'),v('phone'),v('location'),v('linkedin')].filter(Boolean).join(' | ')}\n\n`;
+ if(v('summary')) txt += `SUMMARY\n-------\n${v('summary')}\n\n`;
+ if(entries.experience.length){
+   txt += `EXPERIENCE\n----------\n`;
+   entries.experience.forEach(e => { txt += `${e.title} | ${e.sub}\n${e.desc}\n\n`; });
+ }
+ if(entries.education.length){
+   txt += `EDUCATION\n---------\n`;
+   entries.education.forEach(e => { txt += `${e.title} | ${e.sub}\n${e.desc}\n\n`; });
+ }
+ if(v('skills')) txt += `SKILLS\n------\n${v('skills')}\n\n`;
+ 
+ const blob = new Blob([txt], {type: 'text/plain'});
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = url;
+ a.download = `${v('name') || 'Resume'}.txt`;
+ a.click();
+ URL.revokeObjectURL(url);
+ showToast('Plain text downloaded!');
+}
+
+function exportMarkdown(){
+ const v=id=>document.getElementById(id).value.trim();
+ let md = `# ${v('name')}\n### ${v('role')}\n*${[v('email'),v('phone'),v('location'),v('linkedin')].filter(Boolean).join(' • ')}*\n\n`;
+ if(v('summary')) md += `## Professional Summary\n${v('summary')}\n\n`;
+ if(entries.experience.length){
+   md += `## Work Experience\n`;
+   entries.experience.forEach(e => { md += `### ${e.title}\n*${e.sub}*\n\n${e.desc}\n\n`; });
+ }
+ if(entries.education.length){
+   md += `## Education\n`;
+   entries.education.forEach(e => { md += `### ${e.title}\n*${e.sub}*\n\n${e.desc}\n\n`; });
+ }
+ if(v('skills')) md += `## Skills\n${v('skills')}\n\n`;
+
+ const blob = new Blob([md], {type: 'text/markdown'});
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = url;
+ a.download = `${v('name') || 'Resume'}.md`;
+ a.click();
+ URL.revokeObjectURL(url);
+ showToast('Markdown downloaded!');
+}
+
+/* Cover Letter Functions */
+function openCoverLetterModal(){
+ document.getElementById('coverLetterModal').style.display = 'flex';
+ generateCoverLetter();
+}
+
+function closeCoverLetterModal(){
+ document.getElementById('coverLetterModal').style.display = 'none';
+}
+
+function generateCoverLetter(){
+ const v=id=>document.getElementById(id).value.trim();
+ const comp = document.getElementById('clCompany').value.trim() || '[Company Name]';
+ const mgr = document.getElementById('clManager').value.trim() || 'Hiring Manager';
+ 
+ const letter = `Dear ${mgr},\n\nI am writing to express my strong interest in the ${v('role') || 'open role'} position at ${comp}. With a demonstrated background in ${v('skills').split(',')[0] || 'core technologies'} and scalable problem solving, I am eager to contribute to your team's ongoing success.\n\nIn my previous work, I have focused on delivering clean code, optimizing performance, and collaborating effectively to ship meaningful digital experiences. I am particularly drawn to ${comp} due to your continued focus on innovation and product quality.\n\nThank you for considering my application. I look forward to the possibility of discussing how my experience and skills can support ${comp}'s mission.\n\nSincerely,\n${v('name') || 'Candidate'}\n${v('email')} | ${v('phone')}`;
+ 
+ document.getElementById('clContent').value = letter;
+}
+
+function copyCoverLetter(){
+ const text = document.getElementById('clContent').value;
+ navigator.clipboard.writeText(text).then(()=>{
+   showToast('Cover letter copied!');
+ });
+}
+
+function printCoverLetter(){
+ const text = document.getElementById('clContent').value;
+ const win = window.open('','_blank');
+ win.document.write(`<html><head><title>Cover Letter</title><style>body{font-family:Arial,sans-serif;padding:40px;line-height:1.6;color:#333;white-space:pre-line;max-width:700px;margin:auto}</style></head><body>${safe(text)}</body></html>`);
+ win.document.close();
+ win.print();
+}
+
 function importData(e){
  const file = e.target.files[0];
  if(!file) return;
@@ -809,6 +1117,7 @@ function importData(e){
      loadProfile(currentProfileId);
      renderEntryForms();
      renderCustomSectionForms();
+     renderSectionOrderManager();
      renderResume();
      showToast('Data imported successfully!');
    } catch(err) {
@@ -824,6 +1133,7 @@ function clearResume(){
  clearResumeFields();
  renderEntryForms();
  renderCustomSectionForms();
+ renderSectionOrderManager();
  renderResume();
  saveData();
  showToast('Profile cleared');
@@ -844,6 +1154,7 @@ initProfileManager();
 loadProfile(currentProfileId);
 renderEntryForms();
 renderCustomSectionForms();
+renderSectionOrderManager();
 renderResume();
 </script>
 </body>
