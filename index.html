@@ -33,9 +33,10 @@ h1{font-size:clamp(36px,6vw,68px);line-height:1.05;letter-spacing:-2.5px;margin:
 .primary,.secondary,.small-btn{border:0;border-radius:10px;padding:13px 19px;font-weight:750}
 .primary{background:linear-gradient(120deg,#ad8aff,#8154f7);color:#fff;box-shadow:0 8px 28px #8154f72b}
 .secondary{background:var(--panel2);color:#fff;border:1px solid var(--border)}
-.small-btn{padding:8px 11px;background:#252238;color:#ddd0ff;border:1px solid #4b3c6b;font-size:12px}
+.small-btn{padding:8px 11px;background:#252238;color:#ddd0ff;border:1px solid #4b3c6b;font-size:12px;border-radius:6px;transition:0.2s}
+.small-btn:hover{background:#383254;color:#fff}
 .stats{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-top:24px;color:var(--muted);font-size:12px}
-.app{display:grid;grid-template-columns:minmax(290px,410px) minmax(0,1fr);gap:22px;padding:20px 4% 60px;max-width:1600px;margin:auto;align-items:start}
+.app{display:grid;grid-template-columns:minmax(290px,420px) minmax(0,1fr);gap:22px;padding:20px 4% 60px;max-width:1600px;margin:auto;align-items:start}
 .panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden}
 .panel-head{padding:19px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .panel-head h2{font-size:16px;margin:0}
@@ -50,9 +51,9 @@ input:focus,textarea:focus,select:focus{border-color:var(--purple)}
 textarea{min-height:75px;resize:vertical;line-height:1.5}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
-.actions button{flex:1}
+.actions button{flex:1;min-width:130px}
 .template-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.template{border:1px solid #393547;border-radius:9px;padding:12px 4px;text-align:center;background:#101019;color:#ccc;font-size:11px}
+.template{border:1px solid #393547;border-radius:9px;padding:12px 4px;text-align:center;background:#101019;color:#ccc;font-size:11px;transition:0.2s}
 .template.active{border-color:var(--purple);background:#2a2042;color:#fff}
 .preview-panel{position:sticky;top:86px}
 .preview-toolbar{padding:13px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid var(--border);flex-wrap:wrap}
@@ -64,13 +65,15 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
 .contact{font-size:10px;color:#656170;line-height:1.9;border-bottom:2px solid #8c69d8;padding-bottom:15px}
 .resume-section{margin-top:20px}
 .resume-section h3{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:#7650cf;border-bottom:1px solid #e4def0;padding-bottom:6px;margin:0 0 9px}
-.resume-section p{font-size:11px;line-height:1.65;color:#484452;margin:4px 0;white-space:pre-line}
+.resume-section p{font-size:11px;line-height:1.65;color:#484452;margin:4px 0}
+.resume-section ul{margin:5px 0 0;padding-left:17px;font-size:11px;line-height:1.6;color:#484452}
+.resume-section li{margin-bottom:3px}
 .resume-section .entry-title{font-size:12px;font-weight:750;color:#282434;margin-top:10px}
 .resume-section .entry-sub{font-size:10px;color:#746d81;margin:3px 0}
 .skills{display:flex;flex-wrap:wrap;gap:6px}
 .skill{font-size:10px;padding:5px 8px;background:#f1ecfa;color:#6243a1;border-radius:4px}
 .footer{text-align:center;padding:24px;color:#77738a;font-size:11px;border-top:1px solid var(--border)}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#29213b;border:1px solid #7054a5;color:white;padding:12px 18px;border-radius:10px;display:none;z-index:10;font-size:13px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#29213b;border:1px solid #7054a5;color:white;padding:12px 18px;border-radius:10px;display:none;z-index:10;font-size:13px;box-shadow:0 8px 30px rgba(0,0,0,0.5)}
 .empty-note{font-size:11px;color:#a5a1b8;line-height:1.6}
 @media(max-width:850px){
  .app{grid-template-columns:1fr;padding:12px}
@@ -115,6 +118,13 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
     <span class="badge" id="saveStatus">Auto-save on</span>
   </div>
   <div class="form-body">
+    <div style="display:flex;gap:8px;margin-bottom:15px;flex-wrap:wrap">
+      <button class="small-btn" onclick="fillSampleData()" style="flex:1">Load Sample Data</button>
+      <button class="small-btn" onclick="exportData()" style="flex:1">Export JSON</button>
+      <button class="small-btn" onclick="document.getElementById('importFile').click()" style="flex:1">Import JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    </div>
+
     <div class="group-title">CHOOSE A TEMPLATE</div>
     <div class="template-row">
       <button class="template active" data-template="classic" onclick="setTemplate('classic',this)">Classic</button>
@@ -124,7 +134,7 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
 
     <div class="group-title">01 — PERSONAL DETAILS</div>
     <div class="field"><label>Full name</label><input id="name" placeholder="e.g. Rahul Sharma" data-save></div>
-    <div class="field"><label>Professional title</label><input id="role" placeholder="e.g. MIS Executive / Software Developer" data-save></div>
+    <div class="field"><label>Professional title</label><input id="role" placeholder="e.g. Full Stack Developer / Executive" data-save></div>
     <div class="two">
       <div class="field"><label>Email</label><input id="email" type="email" placeholder="you@example.com" data-save></div>
       <div class="field"><label>Phone</label><input id="phone" type="tel" placeholder="+91 98765 43210" data-save></div>
@@ -144,7 +154,7 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
     <div id="educationList"></div>
 
     <div class="group-title">05 — SKILLS</div>
-    <div class="field"><label>Separate skills with commas</label><textarea id="skills" placeholder="Excel, Communication, Data Analysis, SQL" data-save></textarea></div>
+    <div class="field"><label>Separate skills with commas</label><textarea id="skills" placeholder="JavaScript, React, Node.js, Git, UI/UX" data-save></textarea></div>
 
     <div class="group-title">06 — PROJECTS <button class="small-btn" onclick="addEntry('projects')">+ Add</button></div>
     <div id="projectsList"></div>
@@ -159,7 +169,7 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
       <button class="primary" onclick="window.print()">Download PDF ↗</button>
       <button class="secondary" onclick="clearResume()">Clear all</button>
     </div>
-    <p class="empty-note">PDF tip: In the print window, choose “Save as PDF” and select A4 paper. For privacy, your information is stored locally in this browser, not in a cloud account.</p>
+    <p class="empty-note">PDF tip: In print settings, set margins to "None" or "Default" and select A4 paper. Data is stored safely in your browser.</p>
   </div>
 </section>
 
@@ -173,10 +183,10 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
       <h1 class="resume-name" id="outName">Your Name</h1>
       <div class="resume-role" id="outRole">Your Professional Title</div>
       <div class="contact" id="outContact">Email · Phone · Location</div>
-      <section class="resume-section" id="summarySection"><h3>Professional Summary</h3><p id="outSummary">Your professional summary will appear here. Add a concise introduction about your background, strengths and career goals.</p></section>
-      <section class="resume-section" id="experienceSection"><h3>Work Experience</h3><div id="outExperience"><p>Add your work experience using the form.</p></div></section>
-      <section class="resume-section" id="educationSection"><h3>Education</h3><div id="outEducation"><p>Add your educational qualifications.</p></div></section>
-      <section class="resume-section" id="skillsSection"><h3>Key Skills</h3><div class="skills" id="outSkills"><span class="skill">Your skills</span></div></section>
+      <section class="resume-section" id="summarySection"><h3>Professional Summary</h3><p id="outSummary"></p></section>
+      <section class="resume-section" id="experienceSection"><h3>Work Experience</h3><div id="outExperience"></div></section>
+      <section class="resume-section" id="educationSection"><h3>Education</h3><div id="outEducation"></div></section>
+      <section class="resume-section" id="skillsSection"><h3>Key Skills</h3><div class="skills" id="outSkills"></div></section>
       <section class="resume-section" id="projectsSection"><h3>Projects</h3><div id="outProjects"></div></section>
       <section class="resume-section" id="certificatesSection"><h3>Certificates</h3><div id="outCertificates"></div></section>
       <section class="resume-section" id="languagesSection"><h3>Languages</h3><p id="outLanguages"></p></section>
@@ -191,9 +201,9 @@ textarea{min-height:75px;resize:vertical;line-height:1.5}
 <script>
 const fields=['name','role','email','phone','location','linkedin','summary','skills','languages'];
 const entryTypes={
- experience:{title:'Job title',sub:'Company name · Dates',desc:'Responsibilities and achievements'},
- education:{title:'Degree / Qualification',sub:'Institution · Dates',desc:'Details (optional)'},
- projects:{title:'Project name',sub:'Tools / Technologies',desc:'What you built and achieved'},
+ experience:{title:'Job title',sub:'Company name · Dates',desc:'Responsibilities and achievements (supports bullet lines)'},
+ education:{title:'Degree / Qualification',sub:'Institution · Dates',desc:'Details / Grades (optional)'},
+ projects:{title:'Project name',sub:'Tools / Technologies',desc:'What you built and achieved (supports bullet lines)'},
  certificates:{title:'Certificate name',sub:'Issuing organization · Year',desc:'Details (optional)'}
 };
 let entries={experience:[],education:[],projects:[],certificates:[]};
@@ -203,6 +213,16 @@ let timer;
 function safe(value){
  return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+
+function formatBullets(text){
+ if(!text) return '';
+ const lines = text.split('\n').map(l=>l.trim()).filter(Boolean);
+ if(lines.length > 1 || lines[0]?.startsWith('-') || lines[0]?.startsWith('•')){
+  return '<ul>' + lines.map(line => `<li>${safe(line.replace(/^[-•*]\s*/, ''))}</li>`).join('') + '</ul>';
+ }
+ return `<p>${safe(text)}</p>`;
+}
+
 function addEntry(type,data={}){
  const id=Date.now().toString(36)+Math.random().toString(36).slice(2,7);
  entries[type].push({id,title:data.title||'',sub:data.sub||'',desc:data.desc||''});
@@ -210,10 +230,21 @@ function addEntry(type,data={}){
  renderResume();
  saveData();
 }
+
 function removeEntry(type,id){
  entries[type]=entries[type].filter(x=>x.id!==id);
  renderEntryForms();renderResume();saveData();
 }
+
+function moveEntry(type, index, direction){
+ const targetIndex = index + direction;
+ if(targetIndex < 0 || targetIndex >= entries[type].length) return;
+ const temp = entries[type][index];
+ entries[type][index] = entries[type][targetIndex];
+ entries[type][targetIndex] = temp;
+ renderEntryForms();renderResume();saveData();
+}
+
 function updateEntry(type,id,key,value){
  const item=entries[type].find(x=>x.id===id);
  if(item)item[key]=value;
@@ -222,19 +253,27 @@ function updateEntry(type,id,key,value){
  document.getElementById('saveStatus').textContent='Saving...';
  timer=setTimeout(saveData,300);
 }
+
 function renderEntryForms(){
  Object.keys(entries).forEach(type=>{
   const box=document.getElementById(type+'List');
   box.innerHTML='';
-  entries[type].forEach(item=>{
+  entries[type].forEach((item, index)=>{
    const wrap=document.createElement('div');
-   wrap.style.cssText='padding:12px;border:1px solid #343344;border-radius:10px;margin-bottom:10px';
+   wrap.style.cssText='padding:12px;border:1px solid #343344;border-radius:10px;margin-bottom:10px;background:#13131c';
    wrap.innerHTML=`
-    <div style="display:flex;justify-content:flex-end;margin-bottom:8px"><button class="small-btn" type="button">Remove</button></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <span style="font-size:11px;color:#85809c;font-weight:700">#${index+1}</span>
+      <div style="display:flex;gap:4px">
+        <button class="small-btn" style="padding:4px 8px" onclick="moveEntry('${type}', ${index}, -1)" ${index===0?'disabled style="opacity:0.3;cursor:not-allowed"':''}>↑</button>
+        <button class="small-btn" style="padding:4px 8px" onclick="moveEntry('${type}', ${index}, 1)" ${index===entries[type].length-1?'disabled style="opacity:0.3;cursor:not-allowed"':''}>↓</button>
+        <button class="small-btn" style="padding:4px 8px;background:#381d28;border-color:#5a2336;color:#ffaec5" onclick="removeEntry('${type}','${item.id}')">✕</button>
+      </div>
+    </div>
     <div class="field"><label>${entryTypes[type].title}</label><input data-key="title" placeholder="${entryTypes[type].title}" value="${safe(item.title)}"></div>
     <div class="field"><label>${entryTypes[type].sub}</label><input data-key="sub" placeholder="${entryTypes[type].sub}" value="${safe(item.sub)}"></div>
     <div class="field"><label>${entryTypes[type].desc}</label><textarea data-key="desc" placeholder="${entryTypes[type].desc}">${safe(item.desc)}</textarea></div>`;
-   wrap.querySelector('button').onclick=()=>removeEntry(type,item.id);
+   
    wrap.querySelectorAll('[data-key]').forEach(input=>{
     input.addEventListener('input',()=>updateEntry(type,item.id,input.dataset.key,input.value));
    });
@@ -242,6 +281,7 @@ function renderEntryForms(){
   });
  });
 }
+
 function renderEntries(type,outId,sectionId){
  const box=document.getElementById(outId);
  box.innerHTML='';
@@ -249,40 +289,48 @@ function renderEntries(type,outId,sectionId){
  document.getElementById(sectionId).style.display=valid.length?'':'none';
  valid.forEach(item=>{
   const div=document.createElement('div');
+  div.style.marginBottom='10px';
   div.innerHTML=`<div class="entry-title">${safe(item.title)}</div>
   ${item.sub.trim()?`<div class="entry-sub">${safe(item.sub)}</div>`:''}
-  ${item.desc.trim()?`<p>${safe(item.desc)}</p>`:''}`;
+  ${item.desc.trim()? formatBullets(item.desc) :''}`;
   box.appendChild(div);
  });
 }
+
 function renderResume(){
  const v=id=>document.getElementById(id).value.trim();
  document.getElementById('outName').textContent=v('name')||'Your Name';
  document.getElementById('outRole').textContent=v('role')||'Your Professional Title';
  const contacts=[v('email'),v('phone'),v('location'),v('linkedin')].filter(Boolean);
  document.getElementById('outContact').textContent=contacts.join('  |  ')||'Email · Phone · Location';
- document.getElementById('outSummary').textContent=v('summary')||'Your professional summary will appear here. Add a concise introduction about your background, strengths and career goals.';
+ document.getElementById('outSummary').textContent=v('summary')||'Your professional summary will appear here.';
  document.getElementById('summarySection').style.display=v('summary')?'':'none';
+ 
  renderEntries('experience','outExperience','experienceSection');
  renderEntries('education','outEducation','educationSection');
  renderEntries('projects','outProjects','projectsSection');
  renderEntries('certificates','outCertificates','certificatesSection');
+ 
  const skills=v('skills').split(',').map(s=>s.trim()).filter(Boolean);
  document.getElementById('skillsSection').style.display=skills.length?'':'none';
  document.getElementById('outSkills').innerHTML=skills.map(s=>`<span class="skill">${safe(s)}</span>`).join('');
+ 
  document.getElementById('outLanguages').textContent=v('languages');
  document.getElementById('languagesSection').style.display=v('languages')?'':'none';
+ 
  const paper=document.getElementById('paper');
  paper.style.borderTop=template==='modern'?'7px solid #7650cf':'none';
  paper.style.fontFamily=template==='minimal'?'Georgia,serif':'Arial,sans-serif';
  document.getElementById('outName').style.color=template==='modern'?'#7650cf':'#24203a';
  document.querySelectorAll('.resume-section h3').forEach(h=>h.style.color=template==='minimal'?'#333':'#7650cf');
 }
+
 function setTemplate(name,button){
  template=name;
  document.querySelectorAll('.template').forEach(b=>b.classList.toggle('active',b===button));
  renderResume();saveData();
 }
+
 function saveData(){
  const data={};
  fields.forEach(id=>data[id]=document.getElementById(id).value);
@@ -295,6 +343,7 @@ function saveData(){
   document.getElementById('saveStatus').textContent='Save unavailable';
  }
 }
+
 function loadData(){
  try{
   const data=JSON.parse(localStorage.getItem('resumecraft_v1')||'null');
@@ -311,22 +360,94 @@ function loadData(){
   }
  }catch(e){}
 }
+
+function fillSampleData(){
+ const sample = {
+  name: "Rahul Sharma",
+  role: "Full Stack Web Developer",
+  email: "rahul.sharma@example.com",
+  phone: "+91 98765 43210",
+  location: "Delhi, India",
+  linkedin: "linkedin.com/in/rahulsharma-dev",
+  summary: "Driven Web Developer with 3+ years of experience crafting fast, responsive web applications. Proven record of optimizing performance and delivering clean modular code.",
+  skills: "JavaScript, TypeScript, React.js, Next.js, Node.js, Express, Tailwind CSS, Git, REST APIs",
+  languages: "English (Professional), Hindi (Native)",
+  entries: {
+    experience: [
+      { id: '1', title: 'Frontend Developer', sub: 'TechCorp Solutions · 2024 – Present', desc: '- Developed and maintained scalable client-facing web applications using React.\n- Boosted Lighthouse performance scores by 35% through image caching and code splitting.\n- Collaborated with UI/UX designers to implement clean responsive interfaces.' },
+      { id: '2', title: 'Junior Web Developer', sub: 'InnoByte Labs · 2022 – 2024', desc: '- Built interactive features and managed RESTful API integrations.\n- Resolved 100+ UI bugs and improved cross-browser compatibility.' }
+    ],
+    education: [
+      { id: '3', title: 'Bachelor of Computer Applications (BCA)', sub: 'Delhi University · 2019 – 2022', desc: 'Graduated with First Class Honors (78%).' }
+    ],
+    projects: [
+      { id: '4', title: 'Task Flow - Productivity App', sub: 'React, Tailwind CSS, IndexedDB', desc: '- Offline-first productivity manager with instant live search and categorization.\n- 5,000+ monthly active users.' }
+    ],
+    certificates: [
+      { id: '5', title: 'Meta Front-End Developer Professional Certificate', sub: 'Coursera / Meta · 2023', desc: '' }
+    ]
+  }
+ };
+ fields.forEach(k => document.getElementById(k).value = sample[k] || '');
+ entries = sample.entries;
+ renderEntryForms();
+ renderResume();
+ saveData();
+ showToast('Sample data loaded');
+}
+
+function exportData(){
+ const data = localStorage.getItem('resumecraft_v1');
+ if(!data){ showToast('No data to export'); return; }
+ const blob = new Blob([data], {type: 'application/json'});
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = url;
+ a.download = `ResumeCraft_Backup_${new Date().toISOString().slice(0,10)}.json`;
+ a.click();
+ URL.revokeObjectURL(url);
+ showToast('Backup exported!');
+}
+
+function importData(e){
+ const file = e.target.files[0];
+ if(!file) return;
+ const reader = new FileReader();
+ reader.onload = (evt) => {
+   try {
+     const data = JSON.parse(evt.target.result);
+     localStorage.setItem('resumecraft_v1', JSON.stringify(data));
+     loadData();
+     renderEntryForms();
+     renderResume();
+     showToast('Data imported successfully!');
+   } catch(err) {
+     showToast('Invalid JSON file!');
+   }
+ };
+ reader.readAsText(file);
+ e.target.value = '';
+}
+
 function clearResume(){
  if(!confirm('Clear all resume details? This cannot be undone.'))return;
  fields.forEach(id=>document.getElementById(id).value='');
  Object.keys(entries).forEach(k=>entries[k]=[]);
  renderEntryForms();renderResume();saveData();showToast('Resume cleared');
 }
+
 function showToast(msg){
  const el=document.getElementById('toast');el.textContent=msg;el.style.display='block';
  setTimeout(()=>el.style.display='none',2200);
 }
+
 document.querySelectorAll('[data-save]').forEach(el=>el.addEventListener('input',()=>{
  renderResume();
  clearTimeout(timer);
  document.getElementById('saveStatus').textContent='Saving...';
  timer=setTimeout(saveData,300);
 }));
+
 loadData();
 renderEntryForms();
 renderResume();
